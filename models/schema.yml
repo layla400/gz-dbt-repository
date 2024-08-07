@@ -1,0 +1,32 @@
+version: 2
+sources:
+  - name: raw
+    schema: gz_raw_data
+    description: raw data source from greenweez
+    tables:
+      - name: sales
+        identifier: raw_gz_sales
+        description: sales data of greenweez
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns:
+                - orders_id
+                - pdt_id
+
+      - name: product
+        identifier: raw_gz_product
+        description: PK of product table
+        columns:
+          - name: products_id
+            tests:
+              - unique
+              - not_null
+
+      - name: ship
+        identifier: raw_gz_ship
+        description: PK of shipping table
+        columns:
+          - name: orders_id
+            tests:
+              - unique
+              - not_null
